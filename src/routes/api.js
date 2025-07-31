@@ -5,6 +5,8 @@ const ExperienceController = require("../controllers/ExperienceController.js");
 const EducationController = require("../controllers/EducationController.js");
 const AdvantageController = require("../controllers/AdvantageController.js");
 const PortfolioController = require("../controllers/PortfolioController.js");
+const ServiceController = require("../controllers/ServiceController.js");
+const BlogController = require("../controllers/BlogController.js");
 const middlewares = require("../middlewares/AuthVerification.js");
 
 //! Register a new user
@@ -42,5 +44,19 @@ router.get("/all-portfolio", PortfolioController.allPortfolio);
 router.get("/single-portfolio/:id", PortfolioController.singlePortfolio);
 router.put("/update-portfolio/:id", PortfolioController.updatePortfolio);
 router.delete("/delete-portfolio/:id", PortfolioController.deletePortfolio);
+
+//! Service
+router.post("/create-service", ServiceController.createService);
+router.get("/all-service", ServiceController.allService);
+router.get("/single-service/:id", ServiceController.singleService);
+router.put("/update-service/:id", ServiceController.updateService);
+router.delete("/delete-service/:id", ServiceController.deleteService);
+
+//! Blog
+router.post("/create-blog", BlogController.createBlog);
+router.get("/all-blog/:perPage/:pageNo", BlogController.allBlog);
+router.get("/single-blog/:id", BlogController.singleBlog);
+router.put("/update-blog/:id", BlogController.updateBlog);
+router.delete("/delete-blog/:id", BlogController.deleteBlog);
 
 module.exports = router;
