@@ -1,19 +1,19 @@
-const AdvantageModel = require("../models/AdvantageModel");
+const PortfolioModel = require("../models/PortfolioModel");
 
-//! Advantage create
-exports.createAdvantage = async (req, res) => {
+//! Portfolio create
+exports.createPortfolio = async (req, res) => {
   try {
-    const { title, category, percent, time } = req.body;
+    const { title, img, link, category } = req.body;
 
-    let data = await AdvantageModel.create({
+    let data = await PortfolioModel.create({
       title,
+      img,
+      link,
       category,
-      percent,
-      time,
     });
     res.status(200).json({
       success: true,
-      message: "Advantage created successfully",
+      message: "Portfolio created successfully",
       data,
     });
   } catch (error) {
@@ -25,13 +25,13 @@ exports.createAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage Get All
-exports.allAdvantage = async (req, res) => {
+//! Portfolio Get All
+exports.allPortfolio = async (req, res) => {
   try {
-    let data = await AdvantageModel.find();
+    let data = await PortfolioModel.find();
     res.status(200).json({
       success: true,
-      message: "Advantage fetched successfully",
+      message: "Portfolio fetched successfully",
       data,
     });
   } catch (error) {
@@ -43,40 +43,41 @@ exports.allAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage Get Single
-exports.singleAdvantage = async (req, res) => {
-  try {
-    const { id } = req.params;
+//! Portfolio Get Single
 
-    let data = await AdvantageModel.findById(id);
-    res.status(200).json({
-      success: true,
-      message: "Advantage fetched successfully",
-      data,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.toString(),
-      message: "Something went wrong.",
-    });
-  }
-};
-
-//! Advantage update single
-exports.updateAdvantage = async (req, res) => {
+exports.singlePortfolio = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, category, percent, time } = req.body;
 
-    let data = await AdvantageModel.findByIdAndUpdate(
+    let data = await PortfolioModel.findById(id);
+    res.status(200).json({
+      success: true,
+      message: "Portfolio fetched successfully",
+      data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.toString(),
+      message: "Something went wrong.",
+    });
+  }
+};
+
+//! Portfolio update single
+exports.updatePortfolio = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, img, link, category } = req.body;
+
+    let data = await PortfolioModel.findByIdAndUpdate(
       id,
-      { title, category, percent, time },
+      { title, img, link, category },
       { new: true }
     );
     res.status(200).json({
       success: true,
-      message: "Advantage updated successfully",
+      message: "Portfolio updated successfully",
       data,
     });
   } catch (error) {
@@ -88,15 +89,15 @@ exports.updateAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage delete single
-exports.deleteAdvantage = async (req, res) => {
+//! Portfolio delete single
+exports.deletePortfolio = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await AdvantageModel.findByIdAndDelete(id);
+    let data = await PortfolioModel.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
-      message: "Advantage deleted successfully",
+      message: "Portfolio deleted successfully",
       data,
     });
   } catch (error) {

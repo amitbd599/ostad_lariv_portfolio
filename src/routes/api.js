@@ -4,6 +4,7 @@ const UserController = require("../controllers/UserController.js");
 const ExperienceController = require("../controllers/ExperienceController.js");
 const EducationController = require("../controllers/EducationController.js");
 const AdvantageController = require("../controllers/AdvantageController.js");
+const PortfolioController = require("../controllers/PortfolioController.js");
 const middlewares = require("../middlewares/AuthVerification.js");
 
 //! Register a new user
@@ -33,6 +34,13 @@ router.post("/create-advantage", AdvantageController.createAdvantage);
 router.get("/all-advantage", AdvantageController.allAdvantage);
 router.get("/single-advantage/:id", AdvantageController.singleAdvantage);
 router.put("/update-advantage/:id", AdvantageController.updateAdvantage);
-// router.delete("/delete-advantage/:id", AdvantageController.deleteAdvantage);
+router.delete("/delete-advantage/:id", AdvantageController.deleteAdvantage);
+
+//! Portfolio
+router.post("/create-portfolio", PortfolioController.createPortfolio);
+router.get("/all-portfolio", PortfolioController.allPortfolio);
+router.get("/single-portfolio/:id", PortfolioController.singlePortfolio);
+router.put("/update-portfolio/:id", PortfolioController.updatePortfolio);
+router.delete("/delete-portfolio/:id", PortfolioController.deletePortfolio);
 
 module.exports = router;
