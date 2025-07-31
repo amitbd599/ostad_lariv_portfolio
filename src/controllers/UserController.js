@@ -145,6 +145,7 @@ exports.update = async (req, res) => {
   }
 };
 
+//! verifyAuth
 exports.verifyAuth = async (req, res) => {
   try {
     res.status(200).json({ success: true });
