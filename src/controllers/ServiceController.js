@@ -1,11 +1,11 @@
-const ServiceModel = require("../models/ServiceModel");
+const serviceModel = require("../models/serviceModel");
 
 //! Service create
 exports.createService = async (req, res) => {
   try {
     const { title, img, description } = req.body;
 
-    let data = await ServiceModel.create({
+    let data = await serviceModel.create({
       title,
       img,
       description,
@@ -27,7 +27,7 @@ exports.createService = async (req, res) => {
 //! Service Get All
 exports.allService = async (req, res) => {
   try {
-    let data = await ServiceModel.find();
+    let data = await serviceModel.find();
     res.status(200).json({
       success: true,
       message: "Service fetched successfully",
@@ -48,7 +48,7 @@ exports.singleService = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await ServiceModel.findById(id);
+    let data = await serviceModel.findById(id);
     res.status(200).json({
       success: true,
       message: "Service fetched successfully",
@@ -69,7 +69,7 @@ exports.updateService = async (req, res) => {
     const { id } = req.params;
     const { title, img, description } = req.body;
 
-    let data = await ServiceModel.findByIdAndUpdate(
+    let data = await serviceModel.findByIdAndUpdate(
       id,
       { title, img, description },
       { new: true }
@@ -93,7 +93,7 @@ exports.deleteService = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await ServiceModel.findByIdAndDelete(id);
+    let data = await serviceModel.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
       message: "Service deleted successfully",

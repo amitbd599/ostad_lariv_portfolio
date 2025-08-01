@@ -1,11 +1,11 @@
-const ExperienceModel = require("../models/ExperienceModel");
+const experienceModel = require("../models/experienceModel");
 
 //! Experience create
 exports.createExperience = async (req, res) => {
   try {
     const { title, company, description, time } = req.body;
 
-    let data = await ExperienceModel.create({
+    let data = await experienceModel.create({
       title,
       company,
       description,
@@ -28,7 +28,7 @@ exports.createExperience = async (req, res) => {
 //! Experience Get All
 exports.allExperience = async (req, res) => {
   try {
-    let data = await ExperienceModel.find();
+    let data = await experienceModel.find();
     res.status(200).json({
       success: true,
       message: "Experience created successfully",
@@ -48,7 +48,7 @@ exports.singleExperience = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await ExperienceModel.findById(id);
+    let data = await experienceModel.findById(id);
     res.status(200).json({
       success: true,
       message: "Experience fetched successfully",
@@ -69,7 +69,7 @@ exports.updateExperience = async (req, res) => {
     const { id } = req.params;
     const { title, company, description, time } = req.body;
 
-    let data = await ExperienceModel.findByIdAndUpdate(
+    let data = await experienceModel.findByIdAndUpdate(
       id,
       { title, company, description, time },
       { new: true }
@@ -93,7 +93,7 @@ exports.deleteExperience = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await ExperienceModel.findByIdAndDelete(id);
+    let data = await experienceModel.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
       message: "Experience deleted successfully",

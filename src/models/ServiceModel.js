@@ -14,6 +14,6 @@ const DataSchema = new mongoose.Schema(
   }
 );
 
-const ServiceModel = mongoose.model("services", DataSchema);
+const serviceModel = mongoose.model("services", DataSchema);
 
-module.exports = ServiceModel;
+module.exports = serviceModel;

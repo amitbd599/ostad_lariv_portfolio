@@ -15,6 +15,6 @@ const DataSchema = new mongoose.Schema(
   }
 );
 
-const EducationModel = mongoose.model("educations", DataSchema);
+const educationModel = mongoose.model("educations", DataSchema);
 
-module.exports = EducationModel;
+module.exports = educationModel;

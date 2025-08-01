@@ -15,6 +15,6 @@ const DataSchema = new mongoose.Schema(
   }
 );
 
-const AdvantageModel = mongoose.model("advantages", DataSchema);
+const advantageModel = mongoose.model("advantages", DataSchema);
 
-module.exports = AdvantageModel;
+module.exports = advantageModel;

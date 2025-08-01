@@ -1,15 +1,14 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const UserModel = require("../models/UserModel");
-const { EncodeToken } = require("../utility/TokenHelper");
-const ObjectId = mongoose.Types.ObjectId;
+const userModel = require("../models/userModel");
+const { EncodeToken } = require("../utility/tokenHelper");
 //! Create user
 exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     // Create and save the new user
-    user = await UserModel.create({ email, password });
+    user = await userModel.create({ email, password });
     res.status(200).json({
       success: true,
       message: "User created successfully",
@@ -28,7 +27,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await UserModel.findOne({ email });
+    const user = await userModel.findOne({ email });
     if (!user)
       return res
         .status(401)
@@ -87,7 +86,7 @@ exports.user = async (req, res) => {
         password: 0,
       },
     };
-    let data = await UserModel.aggregate([MatchStage, project]);
+    let data = await userModel.aggregate([MatchStage, project]);
     res.status(200).json({ success: true, data: data[0] });
   } catch (e) {
     res.status(500).json({
@@ -125,7 +124,7 @@ exports.update = async (req, res) => {
     }
 
     // Update user
-    const updatedUser = await UserModel.findByIdAndUpdate(userId, updatedData, {
+    const updatedUser = await userModel.findByIdAndUpdate(userId, updatedData, {
       new: true,
     });
 

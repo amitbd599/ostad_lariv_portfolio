@@ -15,6 +15,6 @@ const DataSchema = new mongoose.Schema(
   }
 );
 
-const ExperienceModel = mongoose.model("experiences", DataSchema);
+const experienceModel = mongoose.model("experiences", DataSchema);
 
-module.exports = ExperienceModel;
+module.exports = experienceModel;

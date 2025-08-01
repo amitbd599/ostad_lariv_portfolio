@@ -1,11 +1,11 @@
-const EducationModel = require("../models/EducationModel");
+const educationModel = require("../models/educationModel");
 
 //! Education create
 exports.createEducation = async (req, res) => {
   try {
     const { title, institute, description, time } = req.body;
 
-    let data = await EducationModel.create({
+    let data = await educationModel.create({
       title,
       institute,
       description,
@@ -28,7 +28,7 @@ exports.createEducation = async (req, res) => {
 //! Education Get All
 exports.allEducation = async (req, res) => {
   try {
-    let data = await EducationModel.find();
+    let data = await educationModel.find();
     res.status(200).json({
       success: true,
       message: "Education fetched successfully",
@@ -48,7 +48,7 @@ exports.singleEducation = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await EducationModel.findById(id);
+    let data = await educationModel.findById(id);
     res.status(200).json({
       success: true,
       message: "Education fetched successfully",
@@ -69,7 +69,7 @@ exports.updateEducation = async (req, res) => {
     const { id } = req.params;
     const { title, institute, description, time } = req.body;
 
-    let data = await EducationModel.findByIdAndUpdate(
+    let data = await educationModel.findByIdAndUpdate(
       id,
       { title, institute, description, time },
       { new: true }
@@ -93,7 +93,7 @@ exports.deleteEducation = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await EducationModel.findByIdAndDelete(id);
+    let data = await educationModel.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
       message: "Education deleted successfully",

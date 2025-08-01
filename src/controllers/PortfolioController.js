@@ -1,11 +1,11 @@
-const PortfolioModel = require("../models/PortfolioModel");
+const portfolioModel = require("../models/portfolioModel");
 
 //! Portfolio create
 exports.createPortfolio = async (req, res) => {
   try {
     const { title, img, link, category } = req.body;
 
-    let data = await PortfolioModel.create({
+    let data = await portfolioModel.create({
       title,
       img,
       link,
@@ -28,7 +28,7 @@ exports.createPortfolio = async (req, res) => {
 //! Portfolio Get All
 exports.allPortfolio = async (req, res) => {
   try {
-    let data = await PortfolioModel.find();
+    let data = await portfolioModel.find();
     res.status(200).json({
       success: true,
       message: "Portfolio fetched successfully",
@@ -49,7 +49,7 @@ exports.singlePortfolio = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await PortfolioModel.findById(id);
+    let data = await portfolioModel.findById(id);
     res.status(200).json({
       success: true,
       message: "Portfolio fetched successfully",
@@ -70,7 +70,7 @@ exports.updatePortfolio = async (req, res) => {
     const { id } = req.params;
     const { title, img, link, category } = req.body;
 
-    let data = await PortfolioModel.findByIdAndUpdate(
+    let data = await portfolioModel.findByIdAndUpdate(
       id,
       { title, img, link, category },
       { new: true }
@@ -94,7 +94,7 @@ exports.deletePortfolio = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await PortfolioModel.findByIdAndDelete(id);
+    let data = await portfolioModel.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
       message: "Portfolio deleted successfully",

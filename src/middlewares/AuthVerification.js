@@ -1,4 +1,4 @@
-const { DecodeToken } = require("../utility/TokenHelper");
+const { DecodeToken } = require("../utility/tokenHelper");
 
 module.exports = (req, res, next) => {
   token = req.cookies["Token"];

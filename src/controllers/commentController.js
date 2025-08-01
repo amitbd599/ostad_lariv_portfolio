@@ -1,19 +1,22 @@
-const advantageModel = require("../models/advantageModel");
+const { default: mongoose } = require("mongoose");
+const commentModel = require("../models/commentModel");
 
-//! Advantage create
-exports.createAdvantage = async (req, res) => {
+//! Comment create
+exports.createComment = async (req, res) => {
   try {
-    const { title, category, percent, time } = req.body;
+    let { name, blogID, email, comment } = req.body;
+    blogID = new mongoose.Types.ObjectId(req.params.id);
 
-    let data = await advantageModel.create({
-      title,
-      category,
-      percent,
-      time,
+    let data = await commentModel.create({
+      blogID,
+      name,
+      email,
+      comment,
     });
+
     res.status(200).json({
       success: true,
-      message: "Advantage created successfully",
+      message: "Comment created successfully",
       data,
     });
   } catch (error) {
@@ -25,13 +28,13 @@ exports.createAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage Get All
-exports.allAdvantage = async (req, res) => {
+//! Comment Get All
+exports.allComment = async (req, res) => {
   try {
-    let data = await advantageModel.find();
+    let data = await commentModel.find();
     res.status(200).json({
       success: true,
-      message: "Advantage fetched successfully",
+      message: "Comment fetched successfully",
       data,
     });
   } catch (error) {
@@ -43,15 +46,15 @@ exports.allAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage Get Single
-exports.singleAdvantage = async (req, res) => {
+//! Comment Get Single
+exports.singleComment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await advantageModel.findById(id);
+    let data = await commentModel.findById(id);
     res.status(200).json({
       success: true,
-      message: "Advantage fetched successfully",
+      message: "Comment fetched successfully",
       data,
     });
   } catch (error) {
@@ -63,20 +66,20 @@ exports.singleAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage update single
-exports.updateAdvantage = async (req, res) => {
+//! Comment update single
+exports.updateComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, category, percent, time } = req.body;
+    const { name, email, comment } = req.body;
 
-    let data = await advantageModel.findByIdAndUpdate(
+    let data = await commentModel.findByIdAndUpdate(
       id,
-      { title, category, percent, time },
+      { name, email, comment },
       { new: true }
     );
     res.status(200).json({
       success: true,
-      message: "Advantage updated successfully",
+      message: "Comment updated successfully",
       data,
     });
   } catch (error) {
@@ -88,15 +91,15 @@ exports.updateAdvantage = async (req, res) => {
   }
 };
 
-//! Advantage delete single
-exports.deleteAdvantage = async (req, res) => {
+//! Comment delete single
+exports.deleteComment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let data = await advantageModel.findByIdAndDelete(id);
+    let data = await commentModel.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
-      message: "Advantage deleted successfully",
+      message: "Comment deleted successfully",
       data,
     });
   } catch (error) {
