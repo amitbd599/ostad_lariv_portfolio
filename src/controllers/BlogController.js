@@ -72,12 +72,21 @@ exports.singleBlog = async (req, res) => {
     let data = await blogModel.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(id) } },
       {
+        $lookup: {
+          from: "comments",
+          localField: "_id",
+          foreignField: "blogID",
+          as: "comments",
+        },
+      },
+      {
         $project: {
           title: 1,
           img: 1,
           category: 1,
           description: 1,
           createdAt: 1,
+          comments: 1,
         },
       },
     ]);

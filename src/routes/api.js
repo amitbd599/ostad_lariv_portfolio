@@ -8,6 +8,7 @@ const portfolioController = require("../controllers/portfolioController.js");
 const serviceController = require("../controllers/serviceController.js");
 const blogController = require("../controllers/blogController.js");
 const commentController = require("../controllers/commentController.js");
+const dashboardController = require("../controllers/dashboardController.js");
 const middlewares = require("../middlewares/authVerification.js");
 
 //! Register a new user
@@ -17,6 +18,9 @@ router.post("/login", userController.login);
 router.get("/user", middlewares, userController.user);
 router.get("/logout", middlewares, userController.logout);
 router.put("/update", middlewares, userController.update);
+
+//! Dashboard
+router.get("/dashboard", middlewares, dashboardController.dashboard);
 
 //! Experience
 router.post(
