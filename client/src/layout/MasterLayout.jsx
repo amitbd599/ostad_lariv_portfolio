@@ -98,7 +98,7 @@ const MasterLayout = (props) => {
                       className={(navData) =>
                         navData.isActive ? "navActive" : "navNotActive"
                       }
-                      to={"/dashboard/home"}
+                      to={"/dashboard"}
                     >
                       Dashboard
                     </NavLink>
@@ -231,7 +231,7 @@ const MasterLayout = (props) => {
                         ? "inline-block py-[8px]  text-theme"
                         : "inline-block py-[8px]  text-white transition-all duration-300 hover:text-theme"
                     }
-                    to={"/dashboard/home"}
+                    to={"/dashboard"}
                   >
                     Dashboard
                   </NavLink>

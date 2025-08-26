@@ -1,5 +1,3 @@
-import { Progress, Typography } from "@material-tailwind/react";
-import React from "react";
 import {
   FaFacebookF,
   FaGitAlt,
@@ -406,23 +404,23 @@ const AboutComponent = () => {
                         data-aos="fade-up"
                         data-aos-delay="250"
                       >
-                        <Typography
+                        <p
                           className="text-[16px] font-medium text-white"
                           variant="paragraph"
                         >
                           Figma
-                        </Typography>
-                        <Typography className="text-white" variant="h6">
+                        </p>
+                        <p className="text-white" variant="h6">
                           85%
-                        </Typography>
+                        </p>
                       </div>
-                      <Progress
+                      {/* <Progress
                         data-aos="fade-up"
                         data-aos-delay="300"
                         value={85}
                         size="lg"
                         className="progress border border-theme/20 bg-theme/10 p-1"
-                      />
+                      /> */}
                     </div>
                   </div>
                   <div>
@@ -453,23 +451,23 @@ const AboutComponent = () => {
                         data-aos="fade-up"
                         data-aos-delay="250"
                       >
-                        <Typography
+                        <p
                           className="text-[16px] font-medium text-white"
                           variant="paragraph"
                         >
                           NEXT-JS
-                        </Typography>
-                        <Typography className="text-white" variant="h6">
+                        </p>
+                        <p className="text-white" variant="h6">
                           95%
-                        </Typography>
+                        </p>
                       </div>
-                      <Progress
+                      {/* <Progress
                         data-aos="fade-up"
                         data-aos-delay="300"
                         value={95}
                         size="lg"
                         className="progress border border-theme/20 bg-theme/10 p-1"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>

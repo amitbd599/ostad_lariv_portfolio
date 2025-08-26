@@ -1,37 +1,7 @@
-import React, { useRef, useState } from "react";
 import { FaRegEnvelope } from "react-icons/fa6";
-import emailjs from "@emailjs/browser";
 const ContactComponent = () => {
-  const [success, setSuccess] = useState("");
-  const form = useRef();
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-    // Please See Documentation for more information
-    emailjs
-      .sendForm(
-        "service_ljx76ce", //YOUR_SERVICE_ID
-        "template_71bgc2q", //YOUR_TEMPLATE_ID
-        form.current,
-        "cwf8kROl5o3__96Ti" //YOUR_PUBLIC_KEY
-      )
-      .then(
-        (result) => {
-          if (result.text === "OK") {
-            setSuccess("Massage Sent Successfully!");
-            form.current[0].value = "";
-            form.current[1].value = "";
-            form.current[2].value = "";
-            form.current[3].value = "";
-          }
-        },
-        (error) => {
-          if (error.text !== "OK") {
-            setSuccess("Massage Not Sent!");
-          }
-        }
-      );
-  };
+
   return (
     <section className="py-[30px] md:py-[80px]">
       <div className="container">
@@ -82,8 +52,7 @@ const ContactComponent = () => {
           <div className="grid grid-cols-12 gap-[30px]">
             <div className="col-span-12 mt-[30px] lg:col-span-7">
               <form
-                ref={form}
-                onSubmit={sendEmail}
+
                 id="contact-form"
                 className="contact-form"
                 data-aos="fade-up"
@@ -134,13 +103,13 @@ const ContactComponent = () => {
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
                   <button className="btn">SEND MESSAGE</button>
-                  <p
+                  {/* <p
                     className={
                       success ? "mt-3 text-theme" : "mt-3 text-red-500"
                     }
                   >
                     {success}
-                  </p>
+                  </p> */}
                 </div>
               </form>
             </div>

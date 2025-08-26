@@ -1,69 +1,69 @@
-
-import { useState } from "react";
+import DashboardLayout from "../../../layout/DashboardLayout";
 
 const CreateEducation = () => {
-  const [education, setEducation] = useState({
-    year: "",
-    degree: "",
-    institution: "",
-    description: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEducation((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Creating education:", education);
-  };
-
   return (
-    <div className="max-w-3xl mx-auto bg-gray-900 text-white p-6 rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-6">Create Education</h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <input
-          type="text"
-          name="year"
-          placeholder="2021 - Present"
-          value={education.year}
-          onChange={handleChange}
-          className="w-full bg-gray-800 text-white border border-gray-700 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="text"
-          name="degree"
-          placeholder="MBA"
-          value={education.degree}
-          onChange={handleChange}
-          className="w-full bg-gray-800 text-white border border-gray-700 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="text"
-          name="institution"
-          placeholder="University of Dhaka"
-          value={education.institution}
-          onChange={handleChange}
-          className="w-full bg-gray-800 text-white border border-gray-700 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <textarea
-          name="description"
-          placeholder="Description..."
-          value={education.description}
-          onChange={handleChange}
-          rows={5}
-          className="w-full bg-gray-800 text-white border border-gray-700 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        ></textarea>
+    <DashboardLayout>
+      <section className='mt-[50px]'>
+        <div className='container mx-auto '>
+          <div>
+            <div className='border border-gray-200 px-[30px] py-[40px] rounded-[20px] '>
+              <div>
+                <h2 className='text-[30px] font-bold'>Create Education</h2>
+              </div>
 
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 transition px-6 py-2 rounded text-white font-medium"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+              <form
+                className='contact-form aos-init aos-animate'
+                data-aos='fade-up'
+                data-aos-delay={100}
+              >
+                <div className='mt-[30px]'>
+                  <input
+                    name='title'
+                    className='inputBox'
+                    placeholder='Title'
+                    required
+                    type='text'
+                  />
+                </div>
+                <div className='mt-[30px]'>
+                  <input
+                    name='institution'
+                    className='inputBox'
+                    placeholder='Institution'
+                    required
+                    type='text'
+                  />
+                </div>
+                <div className='mt-[30px]'>
+                  <input
+                    name='description'
+                    className='inputBox'
+                    placeholder='Description'
+                    required
+                    type='text'
+                  />
+                </div>
+                <div className='mt-[30px]'>
+                  <input
+                    name='time'
+                    className='inputBox'
+                    placeholder='Time'
+                    required
+                    type='text'
+                  />
+                </div>
+                <div
+                  className='wow fadeIn  animated mt-[30px]'
+                  style={{ visibility: "visible", animationName: "fadeIn" }}
+                >
+                  <button className='btn'>Create Education</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </DashboardLayout>
   );
 };
 
