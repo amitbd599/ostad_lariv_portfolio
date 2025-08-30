@@ -247,7 +247,14 @@ const DashboardLayout = ({ children }) => {
       </button>
 
       {/* Main content */}
-      <main className='min-h-screen flex-1 p-6'>{children}</main>
+      <main className='min-h-screen flex-1 p-6'>
+        <div className=' block w-full bg-[#111827] py-4 rounded-lg'>
+          <div className='flex justify-end items-center'>
+            <button className='btn'>Logout</button>
+          </div>
+        </div>
+        <div className='pt-[50px]'>{children}</div>
+      </main>
     </div>
   );
 };
