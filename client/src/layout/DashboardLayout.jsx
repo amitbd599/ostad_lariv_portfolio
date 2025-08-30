@@ -182,14 +182,7 @@ const DashboardLayout = ({ children }) => {
             </li>
             <li className='my-3'>
               <h3 className='text-[18px] font-medium mb-1'>Comment</h3>
-              <NavLink
-                to='/create-comment'
-                className={({ isActive }) =>
-                  `${linkClass} ${isActive ? activeClass : ""}`
-                }
-              >
-                Create-comment
-              </NavLink>
+
               <hr className='my-2' />
               <NavLink
                 to='/get-all-comment'
@@ -209,6 +202,26 @@ const DashboardLayout = ({ children }) => {
                 }
               >
                 Upload-file
+              </NavLink>
+              <hr className='my-2' />
+              <NavLink
+                to='/get-all-file'
+                className={({ isActive }) =>
+                  `${linkClass} ${isActive ? activeClass : ""}`
+                }
+              >
+                Get-all-File
+              </NavLink>
+            </li>
+            <li className='my-3'>
+              <h3 className='text-[18px] font-medium mb-1'>Profile</h3>
+              <NavLink
+                to='/user-update'
+                className={({ isActive }) =>
+                  `${linkClass} ${isActive ? activeClass : ""}`
+                }
+              >
+                Profile Update
               </NavLink>
             </li>
           </ul>

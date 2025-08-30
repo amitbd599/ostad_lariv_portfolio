@@ -23,6 +23,22 @@ import GetAllExperience from "./pages/dashboard/experience/GetAllExperience";
 import CreateEducation from "./pages/dashboard/education/CreateEducation";
 import GetAllEducation from "./pages/dashboard/education/GetAllEducation";
 import UpdateEducation from "./pages/dashboard/education/UpdateEducation";
+import CreateAdvantages from "./pages/dashboard/advantages/CreateAdvantages";
+import GetAllAdvantages from "./pages/dashboard/advantages/GetAllAdvantages";
+import UpdateAdvantages from "./pages/dashboard/advantages/UpdateAdvantages";
+import CreatePortfolio from "./pages/dashboard/portfolio/CreatePortfolio";
+import GetAllPortfolio from "./pages/dashboard/portfolio/GetAllPortfolio";
+import UpdatePortfolio from "./pages/dashboard/portfolio/UpdatePortfolio";
+import CreateService from "./pages/dashboard/service/CreateService";
+import GetAllService from "./pages/dashboard/service/GetAllService";
+import UpdateService from "./pages/dashboard/service/UpdateService";
+import CreateTestimonial from "./pages/dashboard/testimonial/CreateTestimonial";
+import GetAllTestimonial from "./pages/dashboard/testimonial/GetAllTestimonial";
+import UpdateTestimonial from "./pages/dashboard/testimonial/UpdateTestimonial";
+import GetAllComment from "./pages/dashboard/comment/GetAllComment";
+import UploadFile from "./pages/dashboard/upload/UploadFile";
+import GetAllUploadFile from "./pages/dashboard/upload/GetAllUploadFile";
+import UserUpdate from "./pages/dashboard/user/UserUpdate";
 
 function App() {
   useEffect(() => {
@@ -77,6 +93,62 @@ function App() {
           path='/update-single-education'
           element={<UpdateEducation />}
         />
+
+        {/* Advantages */}
+        <Route exact path='/create-advantages' element={<CreateAdvantages />} />
+        <Route
+          exact
+          path='/get-all-advantages'
+          element={<GetAllAdvantages />}
+        />
+        <Route
+          exact
+          path='/update-single-advantages'
+          element={<UpdateAdvantages />}
+        />
+
+        {/* Portfolio */}
+        <Route exact path='/create-portfolio' element={<CreatePortfolio />} />
+        <Route exact path='/get-all-portfolio' element={<GetAllPortfolio />} />
+        <Route
+          exact
+          path='/update-single-portfolio'
+          element={<UpdatePortfolio />}
+        />
+
+        {/* Service */}
+        <Route exact path='/create-service' element={<CreateService />} />
+        <Route exact path='/get-all-service' element={<GetAllService />} />
+        <Route
+          exact
+          path='/update-single-service'
+          element={<UpdateService />}
+        />
+
+        {/* Testimonial */}
+        <Route
+          exact
+          path='/create-testimonial'
+          element={<CreateTestimonial />}
+        />
+        <Route
+          exact
+          path='/get-all-testimonial'
+          element={<GetAllTestimonial />}
+        />
+        <Route
+          exact
+          path='/update-single-testimonial'
+          element={<UpdateTestimonial />}
+        />
+
+        {/* Comment */}
+        <Route exact path='/get-all-comment' element={<GetAllComment />} />
+
+        {/* Upload File */}
+        <Route exact path='/upload-file' element={<UploadFile />} />
+        <Route exact path='/get-all-file' element={<GetAllUploadFile />} />
+        <Route exact path='/user-update' element={<UserUpdate />} />
 
         {/* Fallback Route */}
         <Route path='*' element={<Error />} />
