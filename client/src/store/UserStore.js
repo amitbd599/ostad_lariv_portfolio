@@ -51,6 +51,40 @@ const UserStore = create((set) => ({
     }
   },
 
+  //! user-read api -- done
+  userData: null,
+  userReadRequest: async () => {
+    try {
+      let res = await axios.get(baseURL + "/user", {
+        withCredentials: true,
+        credentials: "include",
+      });
+      if (res?.data?.success === true) {
+        set({ userData: res?.data?.data });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  //! update profile
+  profileUpdate: async (reqBody) => {
+    try {
+      let res = await axios.put(baseURL + "/update", reqBody, {
+        withCredentials: true,
+      });
+      if (res?.data?.success === true) {
+        SuccessToast(res?.data?.message);
+        return true;
+      } else {
+        ErrorToast(res?.data?.message);
+        return false;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   //! dashboard api -- done
   dashboardData: null,
   dashboardRequest: async () => {

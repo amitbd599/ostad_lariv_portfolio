@@ -157,7 +157,7 @@ function App() {
         {/* Upload File */}
         <Route exact path='/upload-file' element={<UploadFile />} />
         <Route exact path='/get-all-file' element={<GetAllUploadFile />} />
-        <Route exact path='/user-update' element={<UserUpdate />} />
+        <Route exact path='/user-update' element={<PrivateRoute><UserUpdate /></PrivateRoute>} />
 
         {/* Fallback Route */}
         <Route path='*' element={<Error />} />
