@@ -1,6 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import ExperienceStore from "../../../store/ExperienceStore";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const CreateExperience = () => {
+  let { createExperienceRequest, createExperienceLoading } = ExperienceStore();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+    const formData = new FormData(e.currentTarget);
+    const title = formData.get("title");
+    const subTitle = formData.get("subTitle");
+    const description = formData.get("description");
+    const time = formData.get("time");
+
+    let res = await createExperienceRequest({
+      title,
+      subTitle,
+      description,
+      time,
+    });
+    if (res) {
+      navigate("/get-all-experience");
+    }
+  };
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -12,6 +36,7 @@ const CreateExperience = () => {
               </div>
 
               <form
+                onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
                 data-aos-delay={100}
@@ -56,7 +81,15 @@ const CreateExperience = () => {
                   className='wow fadeIn  animated mt-[30px]'
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
-                  <button className='btn'>Create Experience</button>
+                  <button className='btn ' type='submit'>
+                    {createExperienceLoading ? (
+                      <span className='flex gap-2'>
+                        <HiOutlineRefresh /> Processing
+                      </span>
+                    ) : (
+                      <>Create Experience</>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>
