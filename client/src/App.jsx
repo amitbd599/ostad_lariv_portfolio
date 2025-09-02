@@ -39,6 +39,7 @@ import GetAllComment from "./pages/dashboard/comment/GetAllComment";
 import UploadFile from "./pages/dashboard/upload/UploadFile";
 import GetAllUploadFile from "./pages/dashboard/upload/GetAllUploadFile";
 import UserUpdate from "./pages/dashboard/user/UserUpdate";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   useEffect(() => {
@@ -65,7 +66,15 @@ function App() {
         <Route exact path='/login' element={<Login />} />
 
         {/* dashboard all page */}
-        <Route exact path='/dashboard' element={<Dashboard />} />
+        <Route
+          exact
+          path='/dashboard'
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
 
         {/* Blog */}
         <Route exact path='/create-blog' element={<CreateBlog />} />

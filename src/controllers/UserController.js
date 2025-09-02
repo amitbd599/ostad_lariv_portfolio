@@ -30,14 +30,14 @@ exports.login = async (req, res) => {
     const user = await userModel.findOne({ email });
     if (!user)
       return res
-        .status(401)
+        .status(200)
         .json({ success: false, message: "Invalid email or password" });
 
     // isMatch password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res
-        .status(401)
+        .status(200)
         .json({ success: false, message: "Invalid email or password" });
 
     if (isMatch) {
@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
 
       let options = {
         maxAge: process.env.Cookie_Expire_Time,
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none",
         secure: true,
       };

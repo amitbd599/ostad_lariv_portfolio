@@ -1,11 +1,23 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { FcMenu } from "react-icons/fc";
 import { RiCloseFill } from "react-icons/ri";
+import UserStore from "../store/UserStore";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const DashboardLayout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  let { logoutRequest, logoutLoading } = UserStore();
+
+  let logoutFun = async () => {
+    let res = await logoutRequest();
+    if (res) {
+      navigate("/login");
+    }
+  };
+
   const linkClass =
     "block px-4 py-2 rounded hover:bg-gray-700 transition duration-200";
   const activeClass = "bg-gray-700";
@@ -250,7 +262,15 @@ const DashboardLayout = ({ children }) => {
       <main className='min-h-screen flex-1 p-6'>
         <div className=' block w-full bg-[#111827] py-4 rounded-lg'>
           <div className='flex justify-end items-center'>
-            <button className='btn'>Logout</button>
+            <button className='btn ' onClick={logoutFun}>
+              {logoutLoading ? (
+                <span className='flex gap-2'>
+                  <HiOutlineRefresh /> Processing
+                </span>
+              ) : (
+                <>Logout</>
+              )}
+            </button>
           </div>
         </div>
         <div className='pt-[50px]'>{children}</div>

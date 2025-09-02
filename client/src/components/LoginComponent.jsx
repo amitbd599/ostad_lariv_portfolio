@@ -1,4 +1,21 @@
+import { HiOutlineRefresh } from "react-icons/hi";
+import UserStore from "../store/UserStore";
+import { useNavigate } from "react-router-dom";
 const LoginComponent = () => {
+  const navigate = useNavigate();
+  let { loginUserRequest, loginLoading } = UserStore();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    let res = await loginUserRequest({ email, password });
+    if (res) {
+      navigate("/dashboard");
+    }
+  };
   return (
     <section className=' h-[100vh] flex items-center justify-center'>
       <div className='container mx-auto '>
@@ -16,7 +33,7 @@ const LoginComponent = () => {
               </div>
 
               <form
-                id='contact-form'
+                onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
                 data-aos-delay={100}
@@ -26,7 +43,6 @@ const LoginComponent = () => {
                     name='email'
                     className='inputBox'
                     placeholder='Enter Email'
-                    id='website'
                     required
                     type='text'
                   />
@@ -35,17 +51,24 @@ const LoginComponent = () => {
                   <input
                     className='inputBox'
                     placeholder='Enter Password'
-                    id='website'
                     required
-                    type='text'
-                    name='website'
+                    type='password'
+                    name='password'
                   />
                 </div>
                 <div
                   className='wow fadeIn  animated mt-[30px]'
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
-                  <button className='btn'>Login</button>
+                  <button className='btn ' type='submit'>
+                    {loginLoading ? (
+                      <span className='flex gap-2'>
+                        <HiOutlineRefresh /> Processing
+                      </span>
+                    ) : (
+                      <>Login</>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>
