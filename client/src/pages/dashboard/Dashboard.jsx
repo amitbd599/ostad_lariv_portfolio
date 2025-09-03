@@ -53,7 +53,7 @@ const Dashboard = () => {
                 </div>
               ) : (
                 <>
-                  <Skeleton count={5} baseColor='#111827' />{" "}
+                  <Skeleton count={5} baseColor='#111827' />
                 </>
               )}
             </div>

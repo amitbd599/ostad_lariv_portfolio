@@ -1,11 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import ExperienceStore from "../../../store/ExperienceStore";
+import { useEffect } from "react";
 import { HiOutlineRefresh } from "react-icons/hi";
 
-const CreateExperience = () => {
-  let { createExperienceRequest, createExperienceLoading } = ExperienceStore();
+const UpdateExperience = () => {
+  let { id } = useParams();
+  let {
+    updateExperienceRequest,
+    updateExperienceLoading,
+    singleExperienceRequest,
+    singleExperienceData,
+  } = ExperienceStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    singleExperienceRequest(id);
+  }, [id, singleExperienceRequest]);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
@@ -15,16 +26,22 @@ const CreateExperience = () => {
     const description = formData.get("description");
     const time = formData.get("time");
 
-    let res = await createExperienceRequest({
-      title,
-      company,
-      description,
-      time,
-    });
+    let res = await updateExperienceRequest(
+      {
+        title,
+        company,
+        description,
+        time,
+      },
+      id
+    );
     if (res) {
       navigate("/get-all-experience");
     }
   };
+
+  console.log(singleExperienceData);
+
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -32,10 +49,11 @@ const CreateExperience = () => {
           <div>
             <div className='border border-gray-200 px-[30px] py-[40px] rounded-[20px] '>
               <div>
-                <h2 className='text-[30px] font-bold'>Create Experience</h2>
+                <h2 className='text-[30px] font-bold'>Update Experience</h2>
               </div>
 
               <form
+                key={singleExperienceData?._id}
                 onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
@@ -48,6 +66,7 @@ const CreateExperience = () => {
                     placeholder='Title'
                     required
                     type='text'
+                    defaultValue={singleExperienceData?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -57,6 +76,7 @@ const CreateExperience = () => {
                     placeholder='Company'
                     required
                     type='text'
+                    defaultValue={singleExperienceData?.company}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -66,6 +86,7 @@ const CreateExperience = () => {
                     placeholder='Description'
                     required
                     type='text'
+                    defaultValue={singleExperienceData?.description}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -75,6 +96,7 @@ const CreateExperience = () => {
                     placeholder='Time'
                     required
                     type='text'
+                    defaultValue={singleExperienceData?.time}
                   />
                 </div>
                 <div
@@ -82,7 +104,7 @@ const CreateExperience = () => {
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
                   <button className='btn ' type='submit'>
-                    {createExperienceLoading ? (
+                    {updateExperienceLoading ? (
                       <span className='flex gap-2'>
                         <HiOutlineRefresh /> Processing
                       </span>
@@ -100,4 +122,4 @@ const CreateExperience = () => {
   );
 };
 
-export default CreateExperience;
+export default UpdateExperience;

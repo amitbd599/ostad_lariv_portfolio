@@ -89,27 +89,6 @@ class FormHelper {
       }
     });
   }
-
-  OrderActionAlert(apiFun, reqBody, msg) {
-    return MySwal.fire({
-      title: msg,
-      text: "You won't be able to revert this!",
-      // icon: "warning",
-      iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, do it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        return apiFun(reqBody).then((res) => {
-          if (res) {
-            return true;
-          }
-        });
-      }
-    });
-  }
 }
 export const {
   IsEmpty,
@@ -125,5 +104,4 @@ export const {
   unAuthorize,
   DeleteAlert,
   formatDate,
-  OrderActionAlert,
 } = new FormHelper();

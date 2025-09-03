@@ -40,6 +40,7 @@ import UploadFile from "./pages/dashboard/upload/UploadFile";
 import GetAllUploadFile from "./pages/dashboard/upload/GetAllUploadFile";
 import UserUpdate from "./pages/dashboard/user/UserUpdate";
 import PrivateRoute from "./components/PrivateRoute";
+import UpdateExperience from "./pages/dashboard/experience/UpdateExperience";
 
 function App() {
   useEffect(() => {
@@ -90,8 +91,8 @@ function App() {
         />
         <Route
           exact
-          path='/update-single-experience'
-          element={<UpdateBlog />}
+          path='/update-single-experience/:id'
+          element={<UpdateExperience />}
         />
 
         {/* Education */}
@@ -157,7 +158,15 @@ function App() {
         {/* Upload File */}
         <Route exact path='/upload-file' element={<UploadFile />} />
         <Route exact path='/get-all-file' element={<GetAllUploadFile />} />
-        <Route exact path='/user-update' element={<PrivateRoute><UserUpdate /></PrivateRoute>} />
+        <Route
+          exact
+          path='/user-update'
+          element={
+            <PrivateRoute>
+              <UserUpdate />
+            </PrivateRoute>
+          }
+        />
 
         {/* Fallback Route */}
         <Route path='*' element={<Error />} />
