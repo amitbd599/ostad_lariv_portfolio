@@ -21,7 +21,7 @@ const GetAllExperience = () => {
     }
   };
 
-  console.log(allExperienceData);
+
 
   return (
     <DashboardLayout>

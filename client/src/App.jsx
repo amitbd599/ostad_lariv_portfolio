@@ -100,7 +100,7 @@ function App() {
         <Route exact path='/get-all-education' element={<GetAllEducation />} />
         <Route
           exact
-          path='/update-single-education'
+          path='/update-single-education/:id'
           element={<UpdateEducation />}
         />
 

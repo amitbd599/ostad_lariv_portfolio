@@ -1,6 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import EducationStore from "../../../store/EducationStore";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const CreateEducation = () => {
+  let { createEducationLoading, createEducationRequest } = EducationStore();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+    const formData = new FormData(e.currentTarget);
+    const title = formData.get("title");
+    const institute = formData.get("institute");
+    const description = formData.get("description");
+    const time = formData.get("time");
+
+    let res = await createEducationRequest({
+      title,
+      institute,
+      description,
+      time,
+    });
+    if (res) {
+      navigate("/get-all-education");
+    }
+  };
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -12,6 +36,7 @@ const CreateEducation = () => {
               </div>
 
               <form
+                onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
                 data-aos-delay={100}
@@ -27,9 +52,9 @@ const CreateEducation = () => {
                 </div>
                 <div className='mt-[30px]'>
                   <input
-                    name='institution'
+                    name='institute'
                     className='inputBox'
-                    placeholder='Institution'
+                    placeholder='Institute'
                     required
                     type='text'
                   />
@@ -56,7 +81,15 @@ const CreateEducation = () => {
                   className='wow fadeIn  animated mt-[30px]'
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
-                  <button className='btn'>Create Education</button>
+                  <button className='btn ' type='submit'>
+                    {createEducationLoading ? (
+                      <span className='flex gap-2'>
+                        <HiOutlineRefresh /> Processing
+                      </span>
+                    ) : (
+                      <>Create Education</>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

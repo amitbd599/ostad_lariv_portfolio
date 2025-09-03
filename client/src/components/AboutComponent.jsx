@@ -10,13 +10,14 @@ import { Link } from "react-router-dom";
 import ExperienceStore from "../store/ExperienceStore";
 import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
+import EducationStore from "../store/EducationStore";
 const AboutComponent = () => {
   let { allExperienceRequest, allExperienceData } = ExperienceStore();
+  let { allEducationRequest, allEducationData } = EducationStore();
   useEffect(() => {
     allExperienceRequest();
-  }, [allExperienceRequest]);
-
-  console.log(allExperienceData);
+    allEducationRequest();
+  }, [allEducationRequest, allExperienceRequest]);
 
   return (
     <section className='py-[30px] md:py-[80px]'>
@@ -211,7 +212,7 @@ const AboutComponent = () => {
                 Working <span className='text-theme'>Experience:</span>
               </h2>
               <div className='items mt-[40px] grid gap-[40px]'>
-                {allExperienceData === null ? (
+                {allExperienceData !== null ? (
                   <div className='item relative grid gap-[40px] border-l-[2px] border-text pb-[16px] pl-[35px]'>
                     <FaGripfire className='absolute left-[-16px] top-[-25px] text-[30px] text-text' />
 
@@ -264,79 +265,49 @@ const AboutComponent = () => {
                 Educational <span className='text-theme'>Qualifications:</span>
               </h2>
               <div className='items mt-[40px] grid gap-[40px]'>
-                <div className='item relative grid gap-[40px] border-l-[2px] border-text pb-[16px] pl-[35px]'>
-                  <FaGripfire className='absolute left-[-16px] top-[-25px] text-[30px] text-text' />
+                {allEducationData !== null ? (
+                  <div className='item relative grid gap-[40px] border-l-[2px] border-text pb-[16px] pl-[35px]'>
+                    <FaGripfire className='absolute left-[-16px] top-[-25px] text-[30px] text-text' />
 
-                  <div>
-                    <p
-                      className='text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='100'
-                    >
-                      2021 - Present
-                    </p>
-                    <h3
-                      className='mt-[10px] text-[20px] font-medium text-white md:text-[25px]'
-                      data-aos='fade-up'
-                      data-aos-delay='150'
-                    >
-                      MBA
-                    </h3>
-                    <p
-                      className='mt-[5px] text-[18px] font-medium text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='200'
-                    >
-                      University of Dhaka
-                    </p>
-                    <p
-                      className='mt-[15px] text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='250'
-                    >
-                      Since starting my excursion as an independent creator
-                      almost quite a while back, I've accomplished remote work
-                      for organizations, counseled for new companies, and teamed
-                      up with capable individuals to make computerized items for
-                      both business and purchaser use.
-                    </p>
+                    {allEducationData.map((item, index) => (
+                      <div key={index}>
+                        <p
+                          className='text-text'
+                          data-aos='fade-up'
+                          data-aos-delay='100'
+                        >
+                          {item?.time}
+                        </p>
+                        <h3
+                          className='mt-[10px] text-[20px] font-medium text-white md:text-[25px]'
+                          data-aos='fade-up'
+                          data-aos-delay='150'
+                        >
+                          {item?.title}
+                        </h3>
+                        <p
+                          className='mt-[5px] text-[18px] font-medium text-text'
+                          data-aos='fade-up'
+                          data-aos-delay='200'
+                        >
+                          {item?.institute}
+                        </p>
+                        <p
+                          className='mt-[15px] text-text'
+                          data-aos='fade-up'
+                          data-aos-delay='250'
+                        >
+                          {item?.description}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-
-                  <div>
-                    <p
-                      className='text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='50'
-                    >
-                      2016 - 2020
-                    </p>
-                    <h3
-                      className='mt-[10px] text-[20px] font-medium text-white md:text-[25px]'
-                      data-aos='fade-up'
-                      data-aos-delay='100'
-                    >
-                      BBA
-                    </h3>
-                    <p
-                      className='mt-[5px] text-[18px] font-medium text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='150'
-                    >
-                      University of Dhaka
-                    </p>
-                    <p
-                      className='mt-[15px] text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='200'
-                    >
-                      Since starting my excursion as an independent creator
-                      almost quite a while back, I've accomplished remote work
-                      for organizations, counseled for new companies, and teamed
-                      up with capable individuals to make computerized items for
-                      both business and purchaser use.
-                    </p>
-                  </div>
-                </div>
+                ) : (
+                  <>
+                    {" "}
+                    <Skeleton width={"full"} count={14} baseColor='#111827' />
+                  </>
+                )}
               </div>
             </div>
 

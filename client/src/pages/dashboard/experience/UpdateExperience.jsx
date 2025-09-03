@@ -40,7 +40,7 @@ const UpdateExperience = () => {
     }
   };
 
-  console.log(singleExperienceData);
+
 
   return (
     <DashboardLayout>
