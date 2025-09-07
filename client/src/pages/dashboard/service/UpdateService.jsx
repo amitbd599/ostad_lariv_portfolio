@@ -1,6 +1,55 @@
+import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import { useEffect, useState } from "react";
+import ServiceStore from "../../../store/ServiceStore";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const UpdateService = () => {
+  let { id } = useParams();
+  const navigate = useNavigate();
+
+  let [data, setData] = useState({
+    title: "",
+    img: "",
+    description: "",
+  });
+
+  let {
+    singleServiceData,
+    singleServiceRequest,
+    updateServiceLoading,
+    updateServiceRequest,
+  } = ServiceStore();
+
+  useEffect(() => {
+    singleServiceRequest(id);
+  }, [id, singleServiceRequest]);
+
+  useEffect(() => {
+    if (singleServiceData) {
+      setData({
+        title: singleServiceData.title || "",
+        img: singleServiceData.img || "",
+        description: singleServiceData.description || "",
+      });
+    }
+  }, [singleServiceData]);
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+
+    let res = await updateServiceRequest(data, id);
+    if (res) {
+      navigate("/get-all-service");
+    }
+  };
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -12,6 +61,7 @@ const UpdateService = () => {
               </div>
 
               <form
+                onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
                 data-aos-delay={100}
@@ -23,15 +73,8 @@ const UpdateService = () => {
                     placeholder='Title'
                     required
                     type='text'
-                  />
-                </div>
-                <div className='mt-[30px]'>
-                  <input
-                    name='description'
-                    className='inputBox'
-                    placeholder='Description'
-                    required
-                    type='text'
+                    onChange={handleChange}
+                    value={data?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -41,14 +84,34 @@ const UpdateService = () => {
                     placeholder='Img CDN'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.img}
                   />
                 </div>
-
+                <div className='mt-[30px]'>
+                  <input
+                    name='description'
+                    className='inputBox'
+                    placeholder='Description'
+                    required
+                    type='text'
+                    onChange={handleChange}
+                    value={data?.description}
+                  />
+                </div>
                 <div
                   className='wow fadeIn  animated mt-[30px]'
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
-                  <button className='btn'>Update Service</button>
+                  <button className='btn ' type='submit'>
+                    {updateServiceLoading ? (
+                      <span className='flex gap-2'>
+                        <HiOutlineRefresh /> Processing
+                      </span>
+                    ) : (
+                      <>update Service</>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

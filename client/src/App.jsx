@@ -131,7 +131,7 @@ function App() {
         <Route exact path='/get-all-service' element={<GetAllService />} />
         <Route
           exact
-          path='/update-single-service'
+          path='/update-single-service/:id'
           element={<UpdateService />}
         />
 
