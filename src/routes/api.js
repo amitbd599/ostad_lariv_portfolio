@@ -6,6 +6,7 @@ const educationController = require("../controllers/educationController.js");
 const advantageController = require("../controllers/advantageController.js");
 const portfolioController = require("../controllers/portfolioController.js");
 const serviceController = require("../controllers/serviceController.js");
+const testimonialController = require("../controllers/testimonialController.js");
 const blogController = require("../controllers/blogController.js");
 const commentController = require("../controllers/commentController.js");
 const dashboardController = require("../controllers/dashboardController.js");
@@ -107,6 +108,25 @@ router.delete(
   "/delete-service/:id",
   middlewares,
   serviceController.deleteService
+);
+
+//! Testimonial
+router.post(
+  "/create-testimonial",
+  middlewares,
+  testimonialController.createTestimonial
+);
+router.get("/all-testimonial", testimonialController.allTestimonial);
+router.get("/single-testimonial/:id", testimonialController.singleTestimonial);
+router.put(
+  "/update-testimonial/:id",
+  middlewares,
+  testimonialController.updateTestimonial
+);
+router.delete(
+  "/delete-testimonial/:id",
+  middlewares,
+  testimonialController.deleteTestimonial
 );
 
 //! Blog

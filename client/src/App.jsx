@@ -148,7 +148,7 @@ function App() {
         />
         <Route
           exact
-          path='/update-single-testimonial'
+          path='/update-single-testimonial/:id'
           element={<UpdateTestimonial />}
         />
 

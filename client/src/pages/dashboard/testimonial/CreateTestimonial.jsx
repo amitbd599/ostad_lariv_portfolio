@@ -1,6 +1,35 @@
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import TestimonialStore from "../../../store/TestimonialStore";
+import { useState } from "react";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const CreateTestimonial = () => {
+  let { createTestimonialLoading, createTestimonialRequest } =
+    TestimonialStore();
+  const navigate = useNavigate();
+
+  let [data, setData] = useState({
+    clientName: "",
+    address: "",
+    img: "",
+    feedback: "",
+  });
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent page reload
+
+    let res = await createTestimonialRequest(data);
+    if (res) {
+      navigate("/get-all-testimonial");
+    }
+  };
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -12,6 +41,7 @@ const CreateTestimonial = () => {
               </div>
 
               <form
+                onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
                 data-aos-delay={100}
@@ -23,6 +53,8 @@ const CreateTestimonial = () => {
                     placeholder='Client Name'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.clientName}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -32,6 +64,8 @@ const CreateTestimonial = () => {
                     placeholder='Address'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.address}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -41,24 +75,34 @@ const CreateTestimonial = () => {
                     placeholder='Img CDN'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.img}
                   />
                 </div>
                 <div className='mt-[30px]'>
-                  <textarea
-                    cols={5}
-                    name='reviewText'
+                  <input
+                    name='feedback'
                     className='inputBox'
-                    placeholder='Review Text'
+                    placeholder='Feedback'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.feedback}
                   />
                 </div>
-
                 <div
                   className='wow fadeIn  animated mt-[30px]'
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
-                  <button className='btn'>Create Testimonial</button>
+                  <button className='btn ' type='submit'>
+                    {createTestimonialLoading ? (
+                      <span className='flex gap-2'>
+                        <HiOutlineRefresh /> Processing
+                      </span>
+                    ) : (
+                      <>Create Testimonial</>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>
