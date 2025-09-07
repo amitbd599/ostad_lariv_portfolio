@@ -1,11 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import ExperienceStore from "../../../store/ExperienceStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineRefresh } from "react-icons/hi";
 
 const UpdateExperience = () => {
   let { id } = useParams();
+  let [data, setData] = useState({
+    title: "",
+    company: "",
+    description: "",
+    time: "",
+  });
   let {
     updateExperienceRequest,
     updateExperienceLoading,
@@ -18,29 +24,32 @@ const UpdateExperience = () => {
     singleExperienceRequest(id);
   }, [id, singleExperienceRequest]);
 
+  useEffect(() => {
+    if (singleExperienceData) {
+      setData({
+        title: singleExperienceData.title || "",
+        company: singleExperienceData.company || "",
+        description: singleExperienceData.description || "",
+        time: singleExperienceData.time || "",
+      });
+    }
+  }, [singleExperienceData]);
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
-    const formData = new FormData(e.currentTarget);
-    const title = formData.get("title");
-    const company = formData.get("company");
-    const description = formData.get("description");
-    const time = formData.get("time");
 
-    let res = await updateExperienceRequest(
-      {
-        title,
-        company,
-        description,
-        time,
-      },
-      id
-    );
+    let res = await updateExperienceRequest(data, id);
     if (res) {
       navigate("/get-all-experience");
     }
   };
-
-
 
   return (
     <DashboardLayout>
@@ -66,7 +75,8 @@ const UpdateExperience = () => {
                     placeholder='Title'
                     required
                     type='text'
-                    defaultValue={singleExperienceData?.title}
+                    onChange={handleChange}
+                    value={data?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -76,7 +86,8 @@ const UpdateExperience = () => {
                     placeholder='Company'
                     required
                     type='text'
-                    defaultValue={singleExperienceData?.company}
+                    onChange={handleChange}
+                    value={data?.company}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -86,7 +97,8 @@ const UpdateExperience = () => {
                     placeholder='Description'
                     required
                     type='text'
-                    defaultValue={singleExperienceData?.description}
+                    onChange={handleChange}
+                    value={data?.description}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -96,7 +108,8 @@ const UpdateExperience = () => {
                     placeholder='Time'
                     required
                     type='text'
-                    defaultValue={singleExperienceData?.time}
+                    onChange={handleChange}
+                    value={data?.time}
                   />
                 </div>
                 <div
@@ -109,7 +122,7 @@ const UpdateExperience = () => {
                         <HiOutlineRefresh /> Processing
                       </span>
                     ) : (
-                      <>Create Experience</>
+                      <>Update Experience</>
                     )}
                   </button>
                 </div>

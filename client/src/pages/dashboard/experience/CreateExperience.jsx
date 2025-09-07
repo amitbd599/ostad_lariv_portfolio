@@ -2,25 +2,30 @@ import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import ExperienceStore from "../../../store/ExperienceStore";
 import { HiOutlineRefresh } from "react-icons/hi";
+import { useState } from "react";
 
 const CreateExperience = () => {
   let { createExperienceRequest, createExperienceLoading } = ExperienceStore();
   const navigate = useNavigate();
 
+  let [data, setData] = useState({
+    title: "",
+    company: "",
+    description: "",
+    time: "",
+  });
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
-    const formData = new FormData(e.currentTarget);
-    const title = formData.get("title");
-    const company = formData.get("company");
-    const description = formData.get("description");
-    const time = formData.get("time");
 
-    let res = await createExperienceRequest({
-      title,
-      company,
-      description,
-      time,
-    });
+    let res = await createExperienceRequest(data);
     if (res) {
       navigate("/get-all-experience");
     }
@@ -48,6 +53,8 @@ const CreateExperience = () => {
                     placeholder='Title'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -57,6 +64,8 @@ const CreateExperience = () => {
                     placeholder='Company'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.company}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -66,6 +75,8 @@ const CreateExperience = () => {
                     placeholder='Description'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.description}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -75,6 +86,8 @@ const CreateExperience = () => {
                     placeholder='Time'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.time}
                   />
                 </div>
                 <div

@@ -12,7 +12,7 @@ const GetAllEducation = () => {
 
   useEffect(() => {
     allEducationRequest();
-  }, [allEducationData, allEducationRequest]);
+  }, [allEducationRequest]);
 
   let deleteExperience = async (id) => {
     let res = await DeleteAlert(deleteEducationRequest, id);

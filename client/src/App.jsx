@@ -113,7 +113,7 @@ function App() {
         />
         <Route
           exact
-          path='/update-single-advantages'
+          path='/update-single-advantages/:id'
           element={<UpdateAdvantages />}
         />
 
@@ -122,7 +122,7 @@ function App() {
         <Route exact path='/get-all-portfolio' element={<GetAllPortfolio />} />
         <Route
           exact
-          path='/update-single-portfolio'
+          path='/update-single-portfolio/:id'
           element={<UpdatePortfolio />}
         />
 

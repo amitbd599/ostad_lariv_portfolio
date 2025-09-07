@@ -2,29 +2,34 @@ import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import EducationStore from "../../../store/EducationStore";
 import { HiOutlineRefresh } from "react-icons/hi";
+import { useState } from "react";
 
 const CreateEducation = () => {
   let { createEducationLoading, createEducationRequest } = EducationStore();
   const navigate = useNavigate();
 
+  let [data, setData] = useState({
+    title: "",
+    institute: "",
+    description: "",
+    time: "",
+  });
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
-    const formData = new FormData(e.currentTarget);
-    const title = formData.get("title");
-    const institute = formData.get("institute");
-    const description = formData.get("description");
-    const time = formData.get("time");
 
-    let res = await createEducationRequest({
-      title,
-      institute,
-      description,
-      time,
-    });
+    let res = await createEducationRequest(data);
     if (res) {
       navigate("/get-all-education");
     }
   };
+
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -48,6 +53,8 @@ const CreateEducation = () => {
                     placeholder='Title'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -57,6 +64,8 @@ const CreateEducation = () => {
                     placeholder='Institute'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.institute}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -66,6 +75,8 @@ const CreateEducation = () => {
                     placeholder='Description'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.description}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -75,6 +86,8 @@ const CreateEducation = () => {
                     placeholder='Time'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.time}
                   />
                 </div>
                 <div

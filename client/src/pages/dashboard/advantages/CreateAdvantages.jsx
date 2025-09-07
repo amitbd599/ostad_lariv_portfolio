@@ -1,6 +1,38 @@
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import AdvantageStore from "../../../store/AdvantageStore";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { useState } from "react";
 
 const CreateAdvantages = () => {
+  let { createAdvantageLoading, createAdvantageRequest } = AdvantageStore();
+  const navigate = useNavigate();
+
+  let [data, setData] = useState({
+    title: "",
+    category: "",
+    percent: "",
+    time: "",
+  });
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let res = await createAdvantageRequest(data);
+    if (res) {
+      navigate("/get-all-advantages");
+    }
+  };
+
+  console.log(data);
+
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -12,26 +44,31 @@ const CreateAdvantages = () => {
               </div>
 
               <form
+                onSubmit={handleSubmit}
                 className='contact-form aos-init aos-animate'
                 data-aos='fade-up'
                 data-aos-delay={100}
               >
                 <div className='mt-[30px]'>
                   <input
-                    name='subject'
+                    name='title'
                     className='inputBox'
-                    placeholder='Subject'
+                    placeholder='Title'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
                   <input
-                    name='position'
+                    name='category'
                     className='inputBox'
-                    placeholder='Position'
+                    placeholder='Category'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.category}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -40,7 +77,9 @@ const CreateAdvantages = () => {
                     className='inputBox'
                     placeholder='Percent'
                     required
-                    type='text'
+                    type='number'
+                    onChange={handleChange}
+                    value={data?.percent}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -50,13 +89,23 @@ const CreateAdvantages = () => {
                     placeholder='Time'
                     required
                     type='text'
+                    onChange={handleChange}
+                    value={data?.time}
                   />
                 </div>
                 <div
                   className='wow fadeIn  animated mt-[30px]'
                   style={{ visibility: "visible", animationName: "fadeIn" }}
                 >
-                  <button className='btn'>Create Advantages</button>
+                  <button className='btn ' type='submit'>
+                    {createAdvantageLoading ? (
+                      <span className='flex gap-2'>
+                        <HiOutlineRefresh /> Processing
+                      </span>
+                    ) : (
+                      <>Create Advantages</>
+                    )}
+                  </button>
                 </div>
               </form>
             </div>

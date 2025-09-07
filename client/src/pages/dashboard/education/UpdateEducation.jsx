@@ -1,46 +1,55 @@
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../../layout/DashboardLayout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import EducationStore from "../../../store/EducationStore";
 import { HiOutlineRefresh } from "react-icons/hi";
 
 const UpdateEducation = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
+  let [data, setData] = useState({
+    title: "",
+    institute: "",
+    description: "",
+    time: "",
+  });
   let {
     singleEducationData,
     singleEducationRequest,
     updateEducationLoading,
     updateEducationRequest,
   } = EducationStore();
-  const navigate = useNavigate();
 
   useEffect(() => {
     singleEducationRequest(id);
   }, [id, singleEducationRequest]);
 
+  useEffect(() => {
+    if (singleEducationData) {
+      setData({
+        title: singleEducationData.title || "",
+        institute: singleEducationData.institute || "",
+        description: singleEducationData.description || "",
+        time: singleEducationData.time || "",
+      });
+    }
+  }, [singleEducationData]);
+
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
-    const formData = new FormData(e.currentTarget);
-    const title = formData.get("title");
-    const institute = formData.get("institute");
-    const description = formData.get("description");
-    const time = formData.get("time");
 
-    let res = await updateEducationRequest(
-      {
-        title,
-        institute,
-        description,
-        time,
-      },
-      id
-    );
+    let res = await updateEducationRequest(data, id);
     if (res) {
       navigate("/get-all-education");
     }
   };
-
-  console.log(singleEducationData);
 
   return (
     <DashboardLayout>
@@ -66,7 +75,8 @@ const UpdateEducation = () => {
                     placeholder='Title'
                     required
                     type='text'
-                    defaultValue={singleEducationData?.title}
+                    onChange={handleChange}
+                    value={data?.title}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -76,7 +86,8 @@ const UpdateEducation = () => {
                     placeholder='Institute'
                     required
                     type='text'
-                    defaultValue={singleEducationData?.institute}
+                    onChange={handleChange}
+                    value={data?.institute}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -86,7 +97,8 @@ const UpdateEducation = () => {
                     placeholder='Description'
                     required
                     type='text'
-                    defaultValue={singleEducationData?.description}
+                    onChange={handleChange}
+                    value={data?.description}
                   />
                 </div>
                 <div className='mt-[30px]'>
@@ -96,7 +108,8 @@ const UpdateEducation = () => {
                     placeholder='Time'
                     required
                     type='text'
-                    defaultValue={singleEducationData?.time}
+                    onChange={handleChange}
+                    value={data?.time}
                   />
                 </div>
                 <div
@@ -109,7 +122,7 @@ const UpdateEducation = () => {
                         <HiOutlineRefresh /> Processing
                       </span>
                     ) : (
-                      <>Create Experience</>
+                      <>Update Education</>
                     )}
                   </button>
                 </div>
