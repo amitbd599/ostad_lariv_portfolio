@@ -362,3 +362,12 @@ Version      : 1.0.1
     bottom: 20px !important;
   }
 }
+
+
+.ql-container {
+  height: 300px !important;
+}
+
+.ql-toolbar.ql-snow{
+  background: #fff !important;
+}
