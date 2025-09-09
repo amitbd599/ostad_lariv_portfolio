@@ -4,6 +4,7 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import DashboardLayout from "../../../layout/DashboardLayout";
 import BlogStore from "../../../store/BlogStore";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const CreateBlog = () => {
   let { createBlogLoading, createBlogRequest } = BlogStore();
@@ -30,11 +31,9 @@ const CreateBlog = () => {
     data.description = value;
     let res = await createBlogRequest(data);
     if (res) {
-      navigate("/get-all-blog");
+      navigate("/get-all-blog/1");
     }
   };
-
-  console.log(value);
 
   const formats = [
     "header",

@@ -30,14 +30,16 @@ const BlogStore = create((set) => ({
 
   //! all-blog api -- done
   allBlogData: null,
-  allBlogRequest: async () => {
+  totalBlog: 0,
+  allBlogRequest: async (item, pageNo) => {
     try {
-      let res = await axios.get(baseURL + "/all-blog/10/1", {
+      let res = await axios.get(baseURL + `/all-blog/${item}/${pageNo}`, {
         withCredentials: true,
         credentials: "include",
       });
       if (res?.data?.success === true) {
         set({ allBlogData: res?.data?.data?.blogs });
+        set({ totalBlog: res?.data?.data?.totalCount[0]?.count });
       }
     } catch (e) {
       console.log(e);

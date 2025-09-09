@@ -64,7 +64,7 @@ const DashboardLayout = ({ children }) => {
               </NavLink>
               <hr className='my-2' />
               <NavLink
-                to='/get-all-blog'
+                to='/get-all-blog/1'
                 className={({ isActive }) =>
                   `${linkClass} ${isActive ? activeClass : ""}`
                 }

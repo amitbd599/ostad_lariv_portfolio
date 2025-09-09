@@ -3,22 +3,35 @@ import DashboardLayout from "../../../layout/DashboardLayout";
 import BlogStore from "../../../store/BlogStore";
 import { DeleteAlert, formatDate } from "../../../helper/helper";
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import ReactPaginate from "react-paginate";
 import Skeleton from "react-loading-skeleton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const GetAllBlog = () => {
-  let { allBlogData, allBlogRequest, deleteBlogRequest } = BlogStore();
+  const { pageNo } = useParams();
+  const navigate = useNavigate();
+  let item = 10;
+  let { allBlogData, totalBlog, allBlogRequest, deleteBlogRequest } =
+    BlogStore();
 
   useEffect(() => {
-    allBlogRequest();
-  }, [allBlogRequest]);
+    allBlogRequest(item, pageNo);
+  }, [allBlogRequest, item, pageNo]);
+
+  //! handelPageClick
+  const handelPageClick = async (event) => {
+    let pageNo = event.selected;
+    await allBlogRequest(10, pageNo + 1);
+    navigate(`/get-all-blog/${pageNo + 1}`);
+  };
 
   let deleteBlog = async (id) => {
     let res = await DeleteAlert(deleteBlogRequest, id);
     if (res) {
-      allBlogRequest();
+      allBlogRequest(item, parseInt(pageNo));
     }
   };
+
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -43,13 +56,13 @@ const GetAllBlog = () => {
                           scope='col'
                           className='px-6 py-4 font-medium text-gray-900'
                         >
-                          Institute
+                          Image
                         </th>
                         <th
                           scope='col'
                           className='px-6 py-4 font-medium text-gray-900'
                         >
-                          Time
+                          category
                         </th>
                         <th
                           scope='col'
@@ -71,8 +84,14 @@ const GetAllBlog = () => {
                           <th className='flex gap-3 px-6 py-4 font-normal text-gray-900'>
                             {item?.title}
                           </th>
-                          <td className='px-6 py-4'>{item?.institute}</td>
-                          <td className='px-6 py-4'>{item?.time}</td>
+                          <td className='px-6 py-4'>
+                            <img
+                              className='w-[30px] h-[30px] object-cover'
+                              src={`/api/v1/get-file/${item?.img}`}
+                              alt=''
+                            />
+                          </td>
+                          <td className='px-6 py-4'>{item?.category}</td>
                           <td className='px-6 py-4'>
                             {formatDate(item?.createdAt)}
                           </td>
@@ -95,6 +114,32 @@ const GetAllBlog = () => {
                   <div className='w-full p-3'>
                     <Skeleton width={"full"} count={5} baseColor='#111827' />
                   </div>
+                )}
+              </div>
+              <div className='d-flex align-items-center justify-content-between flex-wrap gap-2 mt-24'>
+                <span>Showing 1 to 10 of {totalBlog} entries</span>
+                {totalBlog > 10 ? (
+                  <div>
+                    <ReactPaginate
+                      className='flex justify-center space-x-4'
+                      previousLabel='<'
+                      nextLabel='>'
+                      pageClassName='pagination'
+                      activeClassName='pagination'
+                      pageLinkClassName=' pagination'
+                      previousLinkClassName='pagination'
+                      nextLinkClassName='pagination'
+                      activeLinkClassName=' pagination active'
+                      breakLabel='...'
+                      pageCount={totalBlog / 10}
+                      initialPage={pageNo - 1}
+                      pageRangeDisplayed={3}
+                      onPageChange={handelPageClick}
+                      type='button'
+                    />
+                  </div>
+                ) : (
+                  ""
                 )}
               </div>
             </div>
