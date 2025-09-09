@@ -4,12 +4,13 @@ const blogModel = require("../models/blogModel");
 //! Blog create
 exports.createBlog = async (req, res) => {
   try {
-    const { title, img, category, description } = req.body;
+    const { title, img, category, description, sortDescription } = req.body;
 
     let data = await blogModel.create({
       title,
       category,
       description,
+      sortDescription,
       img,
     });
     res.status(200).json({
@@ -43,7 +44,15 @@ exports.allBlog = async (req, res) => {
           { $sort: sortStage },
           { $skip: skipRow },
           { $limit: perPage },
-          { $project: { title: 1, img: 1, category: 1, description: 1 } },
+          {
+            $project: {
+              title: 1,
+              img: 1,
+              category: 1,
+              description: 1,
+              sortDescription: 1,
+            },
+          },
         ],
       },
     };
@@ -85,6 +94,7 @@ exports.singleBlog = async (req, res) => {
           img: 1,
           category: 1,
           description: 1,
+          sortDescription: 1,
           createdAt: 1,
           comments: 1,
         },

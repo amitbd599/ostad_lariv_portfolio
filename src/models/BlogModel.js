@@ -8,6 +8,7 @@ const DataSchema = new mongoose.Schema(
     img: { type: String },
     category: { type: String },
     description: { type: String },
+    sortDescription: { type: String },
   },
   {
     timestamps: true,

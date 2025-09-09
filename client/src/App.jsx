@@ -80,7 +80,7 @@ function App() {
         {/* Blog */}
         <Route exact path='/create-blog' element={<CreateBlog />} />
         <Route exact path='/get-all-blog/:pageNo' element={<GetAllBlog />} />
-        <Route exact path='/update-single-blog' element={<UpdateBlog />} />
+        <Route exact path='/update-single-blog/:id' element={<UpdateBlog />} />
 
         {/* Experience */}
         <Route exact path='/create-experience' element={<CreateExperience />} />
