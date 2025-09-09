@@ -10,7 +10,9 @@ const testimonialController = require("../controllers/testimonialController.js")
 const blogController = require("../controllers/blogController.js");
 const commentController = require("../controllers/commentController.js");
 const dashboardController = require("../controllers/dashboardController.js");
+const FileController = require("../controllers/FileController.js");
 const middlewares = require("../middlewares/authVerification.js");
+const uploadFile = require("../middlewares/FileUploads.js");
 
 //! Register a new user
 router.post("/register", userController.register);
@@ -146,5 +148,15 @@ router.delete(
   middlewares,
   commentController.deleteComment
 );
+
+// ! File Uploads
+router.post(
+  "/upload",
+  middlewares,
+  uploadFile.single("file"),
+  FileController.FileUpload
+);
+router.post("/remove", middlewares, FileController.FileRemove);
+// router.get("/all-file/:item/:pageNo", AdminController.AllFile);
 
 module.exports = router;
