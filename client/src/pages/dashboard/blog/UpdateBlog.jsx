@@ -33,11 +33,13 @@ const UpdateBlog = () => {
         title: singleBlogData.title || "",
         category: singleBlogData.category || "",
         img: singleBlogData.img || "",
-        description: singleBlogData.description || "",
+        sortDescription: singleBlogData.sortDescription || "",
       });
       setValue(singleBlogData.description);
     }
   }, [singleBlogData]);
+
+  console.log(data);
 
   const handleChange = (e) => {
     setData({

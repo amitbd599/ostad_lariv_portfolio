@@ -118,11 +118,11 @@ exports.singleBlog = async (req, res) => {
 exports.updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, img, category, description } = req.body;
+    const { title, img, category, description, sortDescription } = req.body;
 
     let data = await blogModel.findByIdAndUpdate(
       id,
-      { title, img, category, description },
+      { title, img, category, description, sortDescription },
       { new: true }
     );
     res.status(200).json({
