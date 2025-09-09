@@ -1,15 +1,43 @@
 import { useState } from "react";
 import DashboardLayout from "../../../layout/DashboardLayout";
+import { ErrorToast } from "../../../helper/helper";
+import FileStore from "../../../store/FileStore";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const UploadFile = () => {
-  const [preview, setPreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  let [rowFile, setRowFile] = useState(null);
+  let { uploadFileRequest, uploadFileRequestLoading } = FileStore();
+  const navigate = useNavigate();
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  //! Image upload
+  const readURL = (input) => {
+    const file = input.target.files && input.target.files[0];
     if (file) {
-      setPreview(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target.result);
+      };
+      reader.readAsDataURL(file);
+      setRowFile(file);
     }
   };
+
+  let fileUploadFun = async () => {
+    if (!rowFile) {
+      ErrorToast("Please select a image file");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", rowFile);
+    let res = await uploadFileRequest(formData);
+
+    if (res) {
+      navigate("/get-all-file");
+    }
+  };
+
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>
@@ -26,10 +54,10 @@ const UploadFile = () => {
                   className='flex flex-col items-center justify-center w-full h-[500px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
                 >
                   <div className='flex flex-col items-center justify-center pt-5 pb-6'>
-                    {preview ? (
+                    {imagePreview ? (
                       <div>
                         <img
-                          src={preview}
+                          src={imagePreview}
                           alt='preview'
                           className='h-40 object-contain rounded-md'
                         />
@@ -40,7 +68,15 @@ const UploadFile = () => {
                             animationName: "fadeIn",
                           }}
                         >
-                          <button className='btn'>Upload file</button>
+                          <button className='btn ' onClick={fileUploadFun}>
+                            {uploadFileRequestLoading ? (
+                              <span className='flex gap-2'>
+                                <HiOutlineRefresh /> Processing
+                              </span>
+                            ) : (
+                              <>update Service</>
+                            )}
+                          </button>
                         </div>
                       </div>
                     ) : (
@@ -72,9 +108,9 @@ const UploadFile = () => {
                   <input
                     id='dropzone-file'
                     type='file'
-                    accept='image/*'
+                    accept='.png, .jpg, .jpeg'
                     className='hidden'
-                    onChange={handleFileChange}
+                    onChange={readURL}
                   />
                 </label>
               </div>

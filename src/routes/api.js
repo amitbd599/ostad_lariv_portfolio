@@ -157,6 +157,6 @@ router.post(
   FileController.FileUpload
 );
 router.post("/remove", middlewares, FileController.FileRemove);
-// router.get("/all-file/:item/:pageNo", AdminController.AllFile);
+router.get("/all-file", FileController.AllFile);
 
 module.exports = router;

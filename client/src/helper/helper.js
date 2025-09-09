@@ -89,6 +89,25 @@ class FormHelper {
       }
     });
   }
+
+  DeleteAlertFile(apiFun, id, filename) {
+    return MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      // icon: "warning",
+      iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return apiFun(id, filename).then((result) => {
+          return result;
+        });
+      }
+    });
+  }
 }
 export const {
   IsEmpty,
@@ -103,5 +122,6 @@ export const {
   getEmail,
   unAuthorize,
   DeleteAlert,
+  DeleteAlertFile,
   formatDate,
 } = new FormHelper();

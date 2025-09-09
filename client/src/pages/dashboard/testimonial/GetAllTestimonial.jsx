@@ -21,8 +21,6 @@ const GetAllTestimonial = () => {
     }
   };
 
-  console.log(allTestimonialData);
-
   return (
     <DashboardLayout>
       <section className='mt-[50px]'>

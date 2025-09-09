@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 const FileModel = require("../models/FileModel");
 const ObjectId = mongoose.Types.ObjectId;
 //! File upload
@@ -42,6 +42,24 @@ exports.FileRemove = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "File Remove successfully",
+      data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.toString(),
+      message: "Something went wrong.",
+    });
+  }
+};
+
+//! All File
+exports.AllFile = async (req, res) => {
+  try {
+    let data = await FileModel.find();
+    res.status(200).json({
+      success: true,
+      message: "File fetch success.",
       data,
     });
   } catch (error) {
