@@ -39,8 +39,6 @@ const UpdateBlog = () => {
     }
   }, [singleBlogData]);
 
-  console.log(data);
-
   const handleChange = (e) => {
     setData({
       ...data,

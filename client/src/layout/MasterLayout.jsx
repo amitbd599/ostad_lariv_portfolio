@@ -83,7 +83,7 @@ const MasterLayout = (props) => {
                       className={(navData) =>
                         navData.isActive ? "navActive" : "navNotActive"
                       }
-                      to={"/blog"}
+                      to={"/blog/1"}
                     >
                       Blog
                     </NavLink>
