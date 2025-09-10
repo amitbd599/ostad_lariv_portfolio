@@ -11,13 +11,16 @@ import ExperienceStore from "../store/ExperienceStore";
 import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import EducationStore from "../store/EducationStore";
+import AdvantageStore from "../store/AdvantageStore";
 const AboutComponent = () => {
   let { allExperienceRequest, allExperienceData } = ExperienceStore();
   let { allEducationRequest, allEducationData } = EducationStore();
+  let { allAdvantageRequest, allAdvantageData } = AdvantageStore();
   useEffect(() => {
     allExperienceRequest();
     allEducationRequest();
-  }, [allEducationRequest, allExperienceRequest]);
+    allAdvantageRequest();
+  }, [allEducationRequest, allExperienceRequest, allAdvantageRequest]);
 
   return (
     <section className='py-[30px] md:py-[80px]'>
@@ -321,104 +324,58 @@ const AboutComponent = () => {
                 My <span className='text-theme'>Advantages:</span>
               </h2>
               <div className='items mt-[40px] grid gap-[40px]'>
-                <div className='item relative grid gap-[40px] border-l-[2px] border-text pb-[16px] pl-[35px]'>
-                  <FaGripfire className='absolute left-[-16px] top-[-25px] text-[30px] text-text' />
+                {allAdvantageData !== null ? (
+                  <>
+                    <div className='item relative grid gap-[40px] border-l-[2px] border-text pb-[16px] pl-[35px]'>
+                      <FaGripfire className='absolute left-[-16px] top-[-25px] text-[30px] text-text' />
 
-                  <div>
-                    <p
-                      className='text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='100'
-                    >
-                      2016 - 2020
-                    </p>
-                    <h3
-                      className='mt-[10px] text-[20px] font-medium text-white md:text-[25px]'
-                      data-aos='fade-up'
-                      data-aos-delay='150'
-                    >
-                      Figma
-                    </h3>
-                    <p
-                      className='mt-[5px] text-[18px] font-medium text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='200'
-                    >
-                      UI/UX Design
-                    </p>
-                    <div className='mt-[20px] w-full'>
-                      <div
-                        className='mb-2 flex items-center justify-between gap-4'
-                        data-aos='fade-up'
-                        data-aos-delay='250'
-                      >
-                        <p
-                          className='text-[16px] font-medium text-white'
-                          variant='paragraph'
-                        >
-                          Figma
-                        </p>
-                        <p className='text-white' variant='h6'>
-                          85%
-                        </p>
-                      </div>
-                      {/* <Progress
-                        data-aos="fade-up"
-                        data-aos-delay="300"
-                        value={85}
-                        size="lg"
-                        className="progress border border-theme/20 bg-theme/10 p-1"
-                      /> */}
+                      {allAdvantageData?.map((item, index) => (
+                        <div key={index}>
+                          <p
+                            className='text-text'
+                            data-aos='fade-up'
+                            data-aos-delay='100'
+                          >
+                            {item?.time}
+                          </p>
+                          <h3
+                            className='mt-[10px] text-[20px] font-medium text-white md:text-[25px]'
+                            data-aos='fade-up'
+                            data-aos-delay='150'
+                          >
+                            {item?.title}
+                          </h3>
+                          <p
+                            className='mt-[5px] text-[18px] font-medium text-text'
+                            data-aos='fade-up'
+                            data-aos-delay='200'
+                          >
+                            {item?.category}
+                          </p>
+                          <div className='mt-[20px] w-full'>
+                            <div
+                              className='mb-2 flex items-center justify-between gap-4'
+                              data-aos='fade-up'
+                              data-aos-delay='250'
+                            >
+                              <p
+                                className='text-[16px] font-medium text-white'
+                                variant='paragraph'
+                              >
+                                {item?.title}
+                              </p>
+                              <p className='text-white' variant='h6'>
+                                {item?.percent}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-                  <div>
-                    <p
-                      className='text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='100'
-                    >
-                      2016 - 2020
-                    </p>
-                    <h3
-                      className='mt-[10px] text-[20px] font-medium text-white md:text-[25px]'
-                      data-aos='fade-up'
-                      data-aos-delay='150'
-                    >
-                      NEXT Prisma Application
-                    </h3>
-                    <p
-                      className='mt-[5px] text-[18px] font-medium text-text'
-                      data-aos='fade-up'
-                      data-aos-delay='200'
-                    >
-                      Web Application Developer
-                    </p>
-                    <div className='mt-[20px] w-full'>
-                      <div
-                        className='mb-2 flex items-center justify-between gap-4'
-                        data-aos='fade-up'
-                        data-aos-delay='250'
-                      >
-                        <p
-                          className='text-[16px] font-medium text-white'
-                          variant='paragraph'
-                        >
-                          NEXT-JS
-                        </p>
-                        <p className='text-white' variant='h6'>
-                          95%
-                        </p>
-                      </div>
-                      {/* <Progress
-                        data-aos="fade-up"
-                        data-aos-delay="300"
-                        value={95}
-                        size="lg"
-                        className="progress border border-theme/20 bg-theme/10 p-1"
-                      /> */}
-                    </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <Skeleton width={"full"} count={14} baseColor='#111827' />
+                )}
               </div>
             </div>
           </div>
