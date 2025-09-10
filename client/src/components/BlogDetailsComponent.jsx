@@ -1,28 +1,55 @@
 import {
   FaBlog,
   FaClockRotateLeft,
-  FaFacebookF,
-  FaGitAlt,
-  FaLinkedinIn,
-  FaQuoteLeft,
+  FaRegCircleUser,
   FaRegCommentDots,
-  FaTwitter,
 } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import parse from "html-react-parser";
 import BlogStore from "../store/BlogStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatDate } from "../helper/helper";
+import CommentStore from "../store/CommentStore";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 const BlogDetailsComponent = () => {
   let { id } = useParams();
   let { singleBlogRequest, singleBlogData } = BlogStore();
 
+  let [data, setData] = useState({
+    blogID: "",
+    name: "",
+    email: "",
+    comment: "",
+  });
+  let {
+    createCommentRequest,
+    createCommentLoading,
+    allCommentRequest,
+    allCommentData,
+  } = CommentStore();
+
   useEffect(() => {
     singleBlogRequest(id);
-  }, [id, singleBlogRequest]);
+    allCommentRequest(id);
+  }, [id, singleBlogRequest, allCommentRequest]);
 
-  console.log(singleBlogData);
+  const handleChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    data.blogID = id;
+
+    let res = await createCommentRequest(data);
+    if (res) {
+      allCommentRequest(id);
+    }
+  };
 
   return (
     <>
@@ -81,7 +108,7 @@ const BlogDetailsComponent = () => {
                     <FaRegCommentDots className='text-base text-theme' />
                   </span>
                   <span className='text-sm text-text'>
-                    {singleBlogData?.comments ? 0 : singleBlogData?.comments}{" "}
+                    {!!allCommentData === false ? 0 : allCommentData?.length}{" "}
                     Comments
                   </span>
                 </div>
@@ -105,77 +132,50 @@ const BlogDetailsComponent = () => {
               <div className='mt-[30px] md:mt-[10px]'>
                 <div data-aos='fade-up' data-aos-delay='100'>
                   <h2 className='text-[22px] font-semibold text-white'>
-                    {singleBlogData?.comments ? 0 : singleBlogData?.comments}{" "}
+                    {!!allCommentData === false ? 0 : allCommentData?.length}{" "}
                     Comments
                   </h2>
                 </div>
                 <div className='my-[15px] border-t border-[#ddd] ' />
-                <div className='parent mt-[40px] grid gap-[30px]'>
-                  <div
-                    className='flex w-full gap-[30px]'
-                    data-aos='fade-up'
-                    data-aos-delay='100'
-                  >
-                    <div className='w-[20%] md:w-auto'>
-                      <img
-                        src='/assets/images/user/user-1.png'
-                        alt='Lariv - React Portfolio Template'
-                        className='w-[120px] rounded-full'
-                      />
-                    </div>
-                    <div className='w-[80%] md:w-auto'>
-                      <div className='flex w-full justify-between'>
-                        <div>
-                          <h2 className='text-[18px] font-medium text-white'>
-                            Jose K. King
-                          </h2>
+                {!!allCommentData === true ? (
+                  <>
+                    <div className='parent mt-[40px] grid gap-[30px]'>
+                      {allCommentData?.map((item, index) => (
+                        <div
+                          key={index}
+                          className='flex w-full gap-[30px]'
+                          data-aos='fade-up'
+                          data-aos-delay='100'
+                        >
+                          <div className='w-[20%] md:w-auto'>
+                            <FaRegCircleUser className='text-[60px]' />
+                          </div>
+                          <div className='w-[80%] md:w-auto'>
+                            <div className='flex w-full justify-between'>
+                              <div>
+                                <h2 className='text-[18px] font-medium text-white'>
+                                  {item?.name}
+                                </h2>
+                                <h2 className='text-[15px] font-medium text-white'>
+                                  {item?.email}
+                                </h2>
+                              </div>
+                            </div>
+                            <div className='mt-[10px]'>
+                              <p className='text-text'>{item?.comment}</p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className='mt-[10px]'>
-                        <p className='text-text'>
-                          We want to find out about all the other exciting
-                          properties of unconventional superconductors. Our
-                          software is powerful, educational and user-friendly,
-                          and we hope that it will help generate new
-                          understanding and suggest entirely new applications
-                          for these unexplored superconductors
-                        </p>
-                      </div>
+                      ))}
                     </div>
-                  </div>
-                  <div
-                    className='flex w-full gap-[30px]'
-                    data-aos='fade-up'
-                    data-aos-delay='100'
-                  >
-                    <div className='w-[20%] md:w-auto'>
-                      <img
-                        src='/assets/images/user/user-2.png'
-                        alt='Lariv - React Portfolio Template'
-                        className='w-[120px] rounded-full'
-                      />
-                    </div>
-                    <div className='w-[80%] md:w-auto'>
-                      <div className='flex w-full justify-between'>
-                        <div>
-                          <h2 className='text-[18px] font-medium text-white'>
-                            Rock Sendro
-                          </h2>
-                        </div>
-                      </div>
-                      <div className='mt-[10px]'>
-                        <p className='text-text'>
-                          We want to find out about all the other exciting
-                          properties of unconventional superconductors. Our
-                          software is powerful, educational and user-friendly,
-                          and we hope that it will help generate new
-                          understanding and suggest entirely new applications
-                          for these unexplored superconductors
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <p className='text-text'>No Comment!</p>
+                  </>
+                )}
+
                 <div className='mt-[60px]'>
                   <div data-aos='fade-up' data-aos-delay='100'>
                     <h2 className='text-[22px] font-semibold text-white'>
@@ -185,13 +185,16 @@ const BlogDetailsComponent = () => {
                       Your email address will not be published. Required fields
                       are marked *
                     </p>
-                    <div className='mt-[20px]'>
+                    <form onSubmit={handleSubmit} className='mt-[20px]'>
                       <div className='grid w-full gap-[20px] md:flex'>
                         <div className='md:w-1/2'>
                           <input
                             className='block w-full rounded-lg border  bg-transparent px-[15px] py-[10px]  text-white focus:outline-none '
                             type='text'
+                            name='name'
                             placeholder='Full Name:'
+                            onChange={handleChange}
+                            value={data?.name}
                           />
                         </div>
                         <div className='md:w-1/2'>
@@ -199,45 +202,37 @@ const BlogDetailsComponent = () => {
                             className='block w-full rounded-lg border  bg-transparent px-[15px] py-[10px]  text-white focus:outline-none '
                             type='text'
                             placeholder='Your Email:'
+                            name='email'
+                            onChange={handleChange}
+                            value={data?.email}
                           />
                         </div>
                       </div>
                       <div className='mt-[20px]'>
                         <textarea
                           placeholder='Write your Comment here:'
-                          name=''
-                          id=''
                           cols={30}
                           rows={16}
                           className='block w-full rounded-lg border  bg-transparent px-[15px] py-[10px]  text-white focus:outline-none '
                           defaultValue={""}
+                          name='comment'
+                          onChange={handleChange}
+                          value={data?.comment}
                         />
                       </div>
-                      <div>
-                        <div className='mb-6 mt-[20px] flex items-start'>
-                          <div className='flex h-5 items-center'>
-                            <input
-                              id='remember'
-                              aria-describedby='remember'
-                              type='checkbox'
-                              className=' h-4 w-4 rounded  bg-btn '
-                            />
-                          </div>
-                          <div className='ml-3 text-sm'>
-                            <label
-                              htmlFor='remember'
-                              className='font-medium text-text'
-                            >
-                              Save my name, email, and website in this browser
-                              for the next time I comment.
-                            </label>
-                          </div>
-                        </div>
+
+                      <div className='mb-[30px] mt-[20px]'>
+                        <button className='btn ' type='submit'>
+                          {createCommentLoading ? (
+                            <span className='flex gap-2'>
+                              <HiOutlineRefresh /> Processing
+                            </span>
+                          ) : (
+                            <>Post Comment</>
+                          )}
+                        </button>
                       </div>
-                      <div className='mb-[30px]'>
-                        <button className='btn'>Post Comment</button>
-                      </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -75,8 +75,8 @@ class FormHelper {
     return MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
-      // icon: "warning",
-      iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
+      icon: "warning",
+      // iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -94,8 +94,8 @@ class FormHelper {
     return MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
-      // icon: "warning",
-      iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
+      icon: "warning",
+      // iconHtml: '<i class="ri-error-warning-line icon__inner"></i>',
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
