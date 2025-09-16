@@ -11,10 +11,7 @@ const Home = () => {
         <Suspense fallback={<InitLoader />}>
           <Helmet>
             <title>Home || React Portfolio</title>
-            <meta
-              name="description"
-              content="React Portfolio Template"
-            />
+            <meta name='description' content='React Portfolio Template' />
           </Helmet>
           <HomeComponent />
         </Suspense>

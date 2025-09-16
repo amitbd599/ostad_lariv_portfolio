@@ -20,7 +20,7 @@ const BlogComponent = () => {
   const handelPageClick = async (event) => {
     let pageNo = event.selected;
     await allBlogRequest(10, pageNo + 1);
-    navigate(`/get-all-blog/${pageNo + 1}`);
+    navigate(`/blog/${pageNo + 1}`);
   };
 
   return (
